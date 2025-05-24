@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo "☁️ AWS kaynakları oluşturuluyor: ortam=${params.ENVIRONMENT}, tür=${params.INSTANCE_TYPE}, adet=${params.INSTANCE_COUNT}"
                 sh """
-                    cd terraform
+                    cd realstateapplication/Task-1-Solution/terraform
                     terraform init
                     terraform workspace select ${params.ENVIRONMENT} || terraform workspace new ${params.ENVIRONMENT}
                     terraform apply \
@@ -52,7 +52,7 @@ pipeline {
             sh """
                 aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT}
                 rm -f ${KEY_PATH}
-                cd terraform
+                cd realstateapplication/Task-1-Solution/terraform
                 terraform destroy \
                     -var="ec2_type=${params.INSTANCE_TYPE}" \
                     -var="num_of_instance=${params.INSTANCE_COUNT}" \
@@ -66,7 +66,7 @@ pipeline {
             sh """
                 aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT} || true
                 rm -f ${KEY_PATH} || true
-                cd terraform
+                cd realstateapplication/Task-1-Solution/terraform
                 terraform destroy \
                     -var="ec2_type=${params.INSTANCE_TYPE}" \
                     -var="num_of_instance=${params.INSTANCE_COUNT}" \
