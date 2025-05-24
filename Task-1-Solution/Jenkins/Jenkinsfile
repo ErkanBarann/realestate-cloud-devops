@@ -28,6 +28,7 @@ pipeline {
 
         stage('Create AWS Resources') {
     steps {
+        echo "☁️ AWS kaynakları oluşturuluyor: ortam=${params.ENVIRONMENT}, tür=${params.INSTANCE_TYPE}, adet=${params.INSTANCE_COUNT}"
         sh """
             cd ../Terraform
             terraform init
@@ -40,6 +41,7 @@ pipeline {
         """
     }
 }
+
         
     }
 
