@@ -8,75 +8,77 @@ pipeline {
     }
 
     environment {
-        AWS_REGION = "us-east-1"
-        KEY_PATH = "${params.ENVIRONMENT}.pem"
+        AWS_REGION= "us-east-1"
+        INSTANCE_COUNT_INT = "${params.INSTANCE_COUNT.toInteger()}"
     }
+
+
 
     stages {
         stage('Create Key Pair') {
             steps {
-                echo "🔐 ${params.ENVIRONMENT} anahtar çifti oluşturuluyor"
                 sh """
-                    aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT} --query KeyMaterial --output text > ${KEY_PATH}
-                    chmod 400 ${KEY_PATH}
+                    cd ..  
+                    aws ec2 create-key-pair --region ${AWS_REGION} --key-name ${ENVIRONMENT} --query KeyMaterial --output text > ${ENVIRONMENT}
+                    chmod 400 ${ENVIRONMENT}
                 """
             }
         }
 
-        stage('Create AWS Resources') {
+
+        stage('Create Aws Resource') {
             steps {
-                echo "☁️ AWS kaynakları oluşturuluyor: ortam=${params.ENVIRONMENT}, tür=${params.INSTANCE_TYPE}, adet=${params.INSTANCE_COUNT}"
                 sh """
-                    cd ../terraform
-                    terraform init
+                    cd Task-1-Solution/terraform
                     terraform workspace select ${params.ENVIRONMENT} || terraform workspace new ${params.ENVIRONMENT}
-                    terraform apply \
-                        -var="ec2_type=${params.INSTANCE_TYPE}" \
-                        -var="num_of_instance=${params.INSTANCE_COUNT}" \
-                        -var="ec2_key=${params.ENVIRONMENT}" \
-                        -auto-approve
+                    terraform init
+                    terraform apply -var='ec2_type=${params.INSTANCE_TYPE}' \
+                                    -var='num_of_instance=${INSTANCE_COUNT_INT}' \
+                                    -var='ec2_key=${ENVIRONMENT}' \
+                                    -auto-approve
                 """
             }
         }
+        
     }
 
     post {
         always {
-            echo "🧹 Her durumda çalışacak blok (ör. loglama, cleanup vs.)"
+            echo 'Post always block'
+
         }
-
         success {
-            echo "✅ Başarılı: AWS kaynakları oluşturuldu"
-
-            timeout(time: 30, unit: 'DAYS') {
-                input message: "🧼 Kaynakları silmek ister misiniz?"
-            }
-
-            echo "🧹 Kaynaklar siliniyor"
-            sh """
-                aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT}
-                rm -f ${KEY_PATH}
-                cd ../Terraform
-                terraform destroy \
-                    -var="ec2_type=${params.INSTANCE_TYPE}" \
-                    -var="num_of_instance=${params.INSTANCE_COUNT}" \
-                    -var="ec2_key=${params.ENVIRONMENT}" \
-                    -auto-approve
-            """
+            echo 'Delete the Key Pair'
+                timeout(time:30, unit:'DAYS'){
+                input message:'Approve terminate'
+                }
+           sh """
+                aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${ENVIRONMENT}
+                cd ..
+                rm -rf ${ENVIRONMENT}
+                """
+            echo 'Delete AWS Resources'            
+                sh """
+                cd Task-1-Solution/terraform
+                terraform destroy --auto-approve
+                """
         }
 
         failure {
-            echo "❌ Başarısızlık: Temizlik işlemi başlatılıyor"
+     echo 'Delete the Key Pair'
             sh """
-                aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT} || true
-                rm -f ${KEY_PATH} || true
-                cd ../Terraform
-                terraform destroy \
-                    -var="ec2_type=${params.INSTANCE_TYPE}" \
-                    -var="num_of_instance=${params.INSTANCE_COUNT}" \
-                    -var="ec2_key=${params.ENVIRONMENT}" \
-                    -auto-approve || true
-            """
+                aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${ENVIRONMENT}
+                cd ..
+                rm -rf ${ENVIRONMENT}
+                """
+            echo 'Delete AWS Resources'            
+                sh """
+                cd Task-1-Solution/terraform
+                terraform destroy --auto-approve
+                """
         }
     }
+ 
+
+
 }
