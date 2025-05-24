@@ -4,7 +4,7 @@ pipeline {
     parameters { 
         choice(name: 'ENVIRONMENT', choices: ['default', 'test', 'dev', 'prod'], description: 'Select the target environment')
         string(name: 'INSTANCE_TYPE', defaultValue: 't2.micro', description: 'AWS EC2 instance type')
-        string(name: 'INSTANCE_COUNT', defaultValue: '1', description: 'Number of instances to deploy, must be a positive number')
+        string(name: 'INSTANCE_COUNT', defaultValue: '1', description: 'Number of instances to deploy')
     }
 
     environment {
@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo "☁️ AWS kaynakları oluşturuluyor: ortam=${params.ENVIRONMENT}, tür=${params.INSTANCE_TYPE}, adet=${params.INSTANCE_COUNT}"
                 sh """
-                    cd Task-1-Solution/terraform
+                    cd ../terraform
                     terraform init
                     terraform workspace select ${params.ENVIRONMENT} || terraform workspace new ${params.ENVIRONMENT}
                     terraform apply \
@@ -52,7 +52,7 @@ pipeline {
             sh """
                 aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT}
                 rm -f ${KEY_PATH}
-                cd Task-1-Solution/terraform
+                cd ../terraform
                 terraform destroy -var="ec2_type=${params.INSTANCE_TYPE}" \
                                  -var="num_of_instance=${params.INSTANCE_COUNT}" \
                                  -var="ec2_key=${params.ENVIRONMENT}" \
@@ -65,7 +65,7 @@ pipeline {
             sh """
                 aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT} || true
                 rm -f ${KEY_PATH} || true
-                cd Task-1-Solution/terraform
+                cd ../terraform
                 terraform destroy -var="ec2_type=${params.INSTANCE_TYPE}" \
                                  -var="num_of_instance=${params.INSTANCE_COUNT}" \
                                  -var="ec2_key=${params.ENVIRONMENT}" \
