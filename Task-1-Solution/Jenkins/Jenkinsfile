@@ -42,7 +42,7 @@ pipeline {
 
     post {
         always {
-            echo "🧹 Her durumda çalışacak blok (loglama, cleanup vs)"
+            echo "🧹 Her durumda çalışacak blok (ör. loglama, cleanup vs.)"
         }
 
         success {
