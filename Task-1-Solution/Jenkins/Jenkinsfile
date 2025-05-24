@@ -53,10 +53,11 @@ pipeline {
                 aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT}
                 rm -f ${KEY_PATH}
                 cd ../terraform
-                terraform destroy -var="ec2_type=${params.INSTANCE_TYPE}" \
-                                 -var="num_of_instance=${params.INSTANCE_COUNT}" \
-                                 -var="ec2_key=${params.ENVIRONMENT}" \
-                                 -auto-approve
+                terraform destroy \
+                    -var="ec2_type=${params.INSTANCE_TYPE}" \
+                    -var="num_of_instance=${params.INSTANCE_COUNT}" \
+                    -var="ec2_key=${params.ENVIRONMENT}" \
+                    -auto-approve
             """
         }
 
@@ -66,10 +67,11 @@ pipeline {
                 aws ec2 delete-key-pair --region ${AWS_REGION} --key-name ${params.ENVIRONMENT} || true
                 rm -f ${KEY_PATH} || true
                 cd ../terraform
-                terraform destroy -var="ec2_type=${params.INSTANCE_TYPE}" \
-                                 -var="num_of_instance=${params.INSTANCE_COUNT}" \
-                                 -var="ec2_key=${params.ENVIRONMENT}" \
-                                 -auto-approve || true
+                terraform destroy \
+                    -var="ec2_type=${params.INSTANCE_TYPE}" \
+                    -var="num_of_instance=${params.INSTANCE_COUNT}" \
+                    -var="ec2_key=${params.ENVIRONMENT}" \
+                    -auto-approve || true
             """
         }
     }
