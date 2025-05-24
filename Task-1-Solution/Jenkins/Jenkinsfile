@@ -27,7 +27,7 @@ pipeline {
             steps {
                 echo "☁️ AWS kaynakları oluşturuluyor: ortam=${params.ENVIRONMENT}, tür=${params.INSTANCE_TYPE}, adet=${params.INSTANCE_COUNT}"
                 sh """
-                    cd ../Terraform
+                    cd ../terraform
                     terraform init
                     terraform workspace select ${params.ENVIRONMENT} || terraform workspace new ${params.ENVIRONMENT}
                     terraform apply \
