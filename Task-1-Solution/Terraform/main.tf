@@ -24,7 +24,21 @@ resource "aws_instance" "devops_project_instance" {
   }
 }
 
+data "aws_security_group" "existing_sg" {
+  filter {
+    name   = "group-name"
+    values = ["${terraform.workspace}-Security-Group"]
+  }
+
+  filter {
+    name   = "vpc-id"
+    values = ["<your-vpc-id>"]
+  }
+}
+
 resource "aws_security_group" "devops_project_sgr" {
+  count = length(data.aws_security_group.existing_sg.id) == 0 ? 1 : 0
+
   name        = "${terraform.workspace}-Security-Group"
   description = "Allow SSH inbound traffic"
 
