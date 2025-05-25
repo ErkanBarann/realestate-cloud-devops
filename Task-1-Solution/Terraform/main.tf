@@ -17,7 +17,7 @@ resource "aws_instance" "devops_project_instance" {
   count = var.num_of_instance
   iam_instance_profile = "devops-project-profile-techpro"
   key_name = var.ec2_key
-  vpc_security_group_ids = [aws_security_group.devops_project_sgr.id]
+  vpc_security_group_ids = aws_security_group.devops_project_sgr.*.id
   tags = {
     Project = "Devops-Project-Server"
     Name = "${terraform.workspace}_server"
