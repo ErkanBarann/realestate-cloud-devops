@@ -41,6 +41,10 @@ resource "aws_security_group" "devops_project_sgr" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "${terraform.workspace}-Security-Group"
+  }
 }
 
 data "aws_ami" "al2023" {
