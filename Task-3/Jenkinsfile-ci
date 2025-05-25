@@ -19,7 +19,7 @@ pipeline {
 
     stage('Clone Repo') {
       steps {
-        git credentialsId: 'github-token-erkan', url: 'https://github.com/techpro-aws-devops/RealEstateAppProject.git', branch: 'main'
+        git credentialsId: 'test', url: 'https://github.com/techpro-aws-devops/RealEstateAppProject.git', branch: 'main'
       }
     }
 
