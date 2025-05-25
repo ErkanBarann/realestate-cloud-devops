@@ -17,10 +17,29 @@ resource "aws_instance" "devops_project_instance" {
   count = var.num_of_instance
   iam_instance_profile = "devops-project-profile-techpro"
   key_name = var.ec2_key
-  vpc_security_group_ids = [data.aws_security_group.existing_sg.id]
+  vpc_security_group_ids = [aws_security_group.devops_project_sgr.id]
   tags = {
     Project = "Devops-Project-Server"
     Name = "${terraform.workspace}_server"
+  }
+}
+
+resource "aws_security_group" "devops_project_sgr" {
+  name        = "${terraform.workspace}-Security-Group"
+  description = "Allow SSH inbound traffic"
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
@@ -40,17 +59,5 @@ data "aws_ami" "al2023" {
   filter {
     name = "name"
     values = ["al2023-ami-2023*"]
-  }
-}
-
-data "aws_security_group" "existing_sg" {
-  filter {
-    name   = "group-name"
-    values = ["${terraform.workspace}-Security-Group"]
-  }
-
-  filter {
-    name   = "vpc-id"
-    values = ["<your-vpc-id>"]
   }
 }
