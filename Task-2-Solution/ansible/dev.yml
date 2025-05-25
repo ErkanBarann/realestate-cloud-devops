@@ -9,6 +9,12 @@
       ansible.builtin.yum: 
         name: '*'
         state: latest
+
+    - name: Check if Docker is installed
+      shell: docker --version
+      register: docker_check
+      failed_when: docker_check.rc != 0
+
     
     - name: Install Docker
       ansible.builtin.package:

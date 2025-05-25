@@ -1,0 +1,40 @@
+pipeline {
+  agent any
+
+  environment {
+    ENV_FILE      = '.env'
+    TEMPLATE_FILE = 'docker-compose-template.yaml'
+    OUTPUT_FILE   = 'docker-compose.yml'
+    AWS_REGION    = 'us-east-1'
+  }
+
+  stages {
+    stage('Generate docker-compose.yml from template') {
+      steps {
+        sh '''
+          echo "[INFO] Generating docker-compose.yml from template"
+          export $(cat $ENV_FILE | xargs)
+          envsubst < $TEMPLATE_FILE > $OUTPUT_FILE
+        '''
+      }
+    }
+
+    stage('Deploy to EC2 via Ansible (Dynamic Inventory)') {
+      steps {
+        sh '''
+          echo "[INFO] Deploying to EC2 with dynamic AWS inventory"
+          ansible-playbook -i inventory_aws_ec2.yml playbook.yml
+        '''
+      }
+    }
+  }
+
+  post {
+    success {
+      echo '[SUCCESS] CD pipeline completed for dev environment!'
+    }
+    failure {
+      echo '[FAILURE] CD pipeline failed.'
+    }
+  }
+}
