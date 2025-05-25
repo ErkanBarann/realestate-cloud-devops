@@ -11,9 +11,23 @@ pipeline {
         script {
           env.AWS_ACCOUNT_ID = sh(script: "aws sts get-caller-identity --query 'Account' --output text", returnStdout: true).trim()
           env.GIT_TAG = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-          env.FRONTEND_IMAGE = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/frontend-repo"
-          env.BACKEND_IMAGE  = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/backend-repo"
+          env.FRONTEND_REPO = "frontend-repo"
+          env.BACKEND_REPO  = "backend-repo"
+          env.FRONTEND_IMAGE = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.FRONTEND_REPO}"
+          env.BACKEND_IMAGE  = "${env.AWS_ACCOUNT_ID}.dkr.ecr.${env.AWS_REGION}.amazonaws.com/${env.BACKEND_REPO}"
         }
+      }
+    }
+
+    stage('Create ECR Repos if not exist') {
+      steps {
+        sh '''
+          aws ecr describe-repositories --repository-names $FRONTEND_REPO --region $AWS_REGION || \
+          aws ecr create-repository --repository-name $FRONTEND_REPO --region $AWS_REGION
+
+          aws ecr describe-repositories --repository-names $BACKEND_REPO --region $AWS_REGION || \
+          aws ecr create-repository --repository-name $BACKEND_REPO --region $AWS_REGION
+        '''
       }
     }
 
