@@ -17,7 +17,7 @@ resource "aws_instance" "devops_project_instance" {
   count = var.num_of_instance
   iam_instance_profile = "devops-project-profile-techpro"
   key_name = var.ec2_key
-  vpc_security_group_ids = [aws_security_group.devops-project-sgr.id]
+  vpc_security_group_ids = [data.aws_security_group.existing_sg.id]
   tags = {
     Project = "Devops-Project-Server"
     Name = "${terraform.workspace}_server"
@@ -43,24 +43,14 @@ data "aws_ami" "al2023" {
   }
 }
 
-
-resource "aws_security_group" "devops-project-sgr" {
-  name        = "${terraform.workspace}-Security-Group"
-  description = "Devops Project Security Group"
-
-  dynamic "ingress" {
-    for_each = lookup(var.ports, terraform.workspace)
-    content {
-      from_port   = ingress.value
-      to_port     = ingress.value
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"] 
-    }
+data "aws_security_group" "existing_sg" {
+  filter {
+    name   = "group-name"
+    values = ["${terraform.workspace}-Security-Group"]
   }
-  egress {
-    from_port   = 0
-    protocol    = -1
-    to_port     = 0
-    cidr_blocks = ["0.0.0.0/0"]
+
+  filter {
+    name   = "vpc-id"
+    values = ["<your-vpc-id>"]
   }
 }
