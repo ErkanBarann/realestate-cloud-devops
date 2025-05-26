@@ -31,7 +31,28 @@
       shell: |
           curl -SL https://github.com/docker/compose/releases/download/v2.36.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
           chmod +x /usr/local/bin/docker-compose
-  
+
+    - name: Check disk space
+      shell: df -h
+
+    - name: Check available disk space
+      shell: df --output=pcent / | tail -1 | tr -d '%'
+      register: disk_usage
+
+    - name: Increase disk space by 50%
+      shell: |
+        current_size=$(lsblk -b -n -o SIZE /dev/xvda1 | head -n 1)
+        new_size=$((current_size + current_size / 2))
+        growpart /dev/xvda 1
+        resize2fs /dev/xvda1
+      when: ansible_facts.devices['xvda'].partitions['xvda1'].size < new_size
+
+    - name: Increase disk space if needed
+      shell: |
+        growpart /dev/xvda 1
+        resize2fs /dev/xvda1
+      when: disk_usage.stdout | int > 90
+
 
 
 
