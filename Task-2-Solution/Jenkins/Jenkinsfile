@@ -34,14 +34,6 @@ pipeline {
                 }
             }
         }
-        stage('Check and Increase Disk Space') {
-            steps {
-                echo 'Checking and increasing disk space on dev environment...'
-                sh '''
-                ansible-playbook -i ansible/inventory_aws_ec2.yml ansible/dev.yml --extra-vars "action=increase_disk_space"
-                '''
-            }
-        }
 
     }
 
