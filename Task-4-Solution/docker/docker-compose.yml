@@ -1,10 +1,12 @@
 services:
   true-roots-backend:
     container_name: true-roots-backend
-    image: "${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/real-estate-app-repo:backend"
+    image: IMAGE_TAG_API
     restart: always
     ports:
-      - "8090:8090"
+      - "8090:8090"   
+    labels:
+      kompose.image-pull-secret: "regcred"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/realestate_db
       SPRING_DATASOURCE_USERNAME: team01realestate
@@ -15,7 +17,7 @@ services:
       - app-network
 
   frontend:
-    image: "${AWS_ACCOUNT_ID}.dkr.ecr.us-east-1.amazonaws.com/real-estate-app-repo:frontend"
+    image: IMAGE_TAG_UI
     restart: always
     ports:
       - "80:80"
@@ -25,6 +27,11 @@ services:
       - AUTH_SECRET= your-strong-secret-key-here-32-characters-minimum
     depends_on:
       - true-roots-backend
+    labels:
+      kompose.image-pull-secret: "regcred"
+      kompose.service.type: "nodeport"
+      kompose.service.nodeport.port: "30001"
+      kompose.service.expose: "realestate.techprodevops.com"
     networks:
       - app-network
 
@@ -39,6 +46,8 @@ services:
       - "5432:5432"
     networks:
       - app-network
+    labels:
+      kompose.image-pull-secret: "regcred"
 
 networks:
   app-network:

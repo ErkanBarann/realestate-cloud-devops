@@ -14,15 +14,15 @@ pipeline {
         stage('Checkout Source Code') {
             steps {
                 echo 'Checking out source code from GitHub'
-                git branch: 'main', url: "${APP_REPO_URL}", credentialsId: 'test1' // change
+                git branch: 'main', url: "${APP_REPO_URL}", credentialsId: 'a0c8623e-b3e4-40cb-a1de-a30d6f21751a' // change
             }
         }
         stage('Prepare Tags for Docker Images') {
             steps {
                 echo 'Preparing Tags for Docker Images'
                 script {
-                    env.IMAGE_TAG_FE = "${ECR_REGISTRY}/${APP_REPO_NAME}:frontend"
-                    env.IMAGE_TAG_BE = "${ECR_REGISTRY}/${APP_REPO_NAME}:backend"
+                    env.IMAGE_TAG_FE = "${ECR_REGISTRY}/${APP_REPO_NAME}:frontend-v${BUILD_NUMBER}"
+                    env.IMAGE_TAG_BE = "${ECR_REGISTRY}/${APP_REPO_NAME}:backend-v${BUILD_NUMBER}"
                 }
             }
         }
@@ -74,11 +74,5 @@ pipeline {
             echo 'Pipeline failed!'
         }
     }
-
-
-
-
-
-
 
 }
