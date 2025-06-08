@@ -1,4 +1,4 @@
-# DevOps Final Project – Real Estate Application
+# Project – Real Estate Application
 
 This project includes 6 tasks focused on building, configuring, deploying, and monitoring a real estate application using modern DevOps tools on AWS.
 
