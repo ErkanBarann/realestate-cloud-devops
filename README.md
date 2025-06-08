@@ -1,3 +1,6 @@
+![Tasks 1-2-3](./Task-1-2-3.png)
+![Tasks 4-5-6](./Task-4-5-6.png)
+
 # Project – Real Estate Application
 
 This project includes 6 tasks focused on building, configuring, deploying, and monitoring a real estate application using modern DevOps tools on AWS.
@@ -32,3 +35,7 @@ Terraform, Ansible, Docker, Jenkins, AWS (EC2, EKS, ECR), Helm, kubectl, eksctl,
 ## Result  
 Using modern DevOps tools, Kubernetes, and AWS cloud infrastructure, a fully automated CI/CD pipeline was implemented for the real estate application.  
 This project provides hands-on experience from infrastructure provisioning to application deployment and centralized monitoring on Kubernetes environments.
+
+## 📊 Project Overview Table
+
+![Project Overview Table](./Project-Overview-Table.png)
