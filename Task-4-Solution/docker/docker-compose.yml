@@ -31,7 +31,7 @@ services:
       kompose.image-pull-secret: "regcred"
       kompose.service.type: "nodeport"
       kompose.service.nodeport.port: "30001"
-      kompose.service.expose: "realestate.techprodevops.com"
+      kompose.service.expose: "realestate.erkanbaran.me"
     networks:
       - app-network
 
