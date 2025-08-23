@@ -18,10 +18,10 @@
         dest: /var/www/html/index.html
         content: |
           <html>
-          <head><title>Techpro Education AWS-DevOps Team</title></head>
+          <head><title>Erkan Baran - Demo </title></head>
           <body>
             <h1>Merhaba Arkadaslar</h1>
-            <p>Techpro Education AWS-DevOps Team olarak Task-2 basarili sonuclanmistir...</p>
+            <p> Task-2 basarili sonuclanmistir...</p>
           </body>
           </html>
         owner: www-data
