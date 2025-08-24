@@ -1,40 +1,48 @@
 ![Tasks 1-2-3](./Task-1-2-3.png)
 ![Tasks 4-5-6](./Task-4-5-6.png)
 
-# Project – Real Estate Application
+# Project – Real Estate Cloud DevOps
 
-This project includes 6 tasks focused on building, configuring, deploying, and monitoring a real estate application using modern DevOps tools on AWS.
-
-## Task Summary
-
-### ✅ TASK-1: Modular Virtual Machine Creation on AWS  
-Provisioned EC2 instances using **Terraform**, automated with **Jenkins**.
-
-### ✅ TASK-2: Configuration with Ansible  
-Configured infrastructure using **Ansible**, deployed through **Jenkins**. Built upon TASK-1.
-
-### ✅ TASK-3: Application Deployment with Docker Compose  
-Built Docker images and pushed to **AWS ECR**, deployed the application on EC2 using **Docker Compose**, automated via **Jenkins**.
-
-### ✅ TASK-4: Migration to Kubernetes  
-Converted the application to Kubernetes using **Kompose**, deployed using **K3s**, managed with **kubectl**, and automated via **Jenkins**.
-
-### ✅ TASK-5: Deployment on AWS EKS with Helm  
-Deployed the same application on **AWS EKS** using **Helm**, integrated **Nginx Ingress** and **Prometheus-Grafana** for monitoring. Fully automated using **Jenkins**.
-
-### ✅ TASK-6: Kubernetes Management with Rancher and EFK Stack  
-Created a Kubernetes cluster via **Rancher UI**, deployed the application using **Git-based Helm charts**, visualized and managed the cluster with **Kubernetes Lens**, and monitored logs using the **EFK stack**.
+This project demonstrates the design and implementation of an **end-to-end DevOps pipeline** for a real estate application on AWS.  
+It covers infrastructure provisioning, configuration management, application deployment, container orchestration, and cloud-native monitoring using modern DevOps tools.
 
 ---
 
-## Tools Used  
-Terraform, Ansible, Docker, Jenkins, AWS (EC2, EKS, ECR), Helm, kubectl, eksctl, Kompose, Kustomize, Rancher, Lens, Prometheus, Grafana, EFK (Elasticsearch, Fluentd, Kibana)
+## Project Modules
+
+### ✅ Module 1: Modular Virtual Machine Creation on AWS  
+Provisioned EC2 instances using **Terraform** and automated provisioning with **Jenkins** pipelines.
+
+### ✅ Module 2: Infrastructure Configuration with Ansible  
+Configured and managed EC2 instances using **Ansible**, fully automated through **Jenkins**. Built upon Module 1.
+
+### ✅ Module 3: Application Deployment with Docker Compose  
+Built Docker images and pushed them to **AWS ECR**, deployed the application on EC2 using **Docker Compose**, and automated the workflow with **Jenkins**.
+
+### ✅ Module 4: Migration to Kubernetes  
+Containerized the application with **Kompose**, deployed it on **K3s**, managed with **kubectl**, and integrated automation via **Jenkins**.
+
+### ✅ Module 5: Deployment on AWS EKS with Helm  
+Deployed the application on **AWS EKS** using **Helm**, configured **Nginx Ingress**, and set up monitoring with **Prometheus & Grafana**. Fully automated via **Jenkins** pipelines.
+
+### ✅ Module 6: Kubernetes Management with Rancher and EFK Stack  
+Created and managed a Kubernetes cluster with **Rancher**, deployed the application using GitOps-based **Helm charts**, visualized the cluster with **Kubernetes Lens**, and implemented centralized logging with the **EFK stack** (Elasticsearch, Fluentd, Kibana).
 
 ---
 
-## Result  
-Using modern DevOps tools, Kubernetes, and AWS cloud infrastructure, a fully automated CI/CD pipeline was implemented for the real estate application.  
-This project provides hands-on experience from infrastructure provisioning to application deployment and centralized monitoring on Kubernetes environments.
+## Tools & Technologies  
+**Infrastructure:** Terraform, Ansible, AWS (EC2, VPC, IAM, EKS, ECR)  
+**CI/CD & Automation:** Jenkins, Git, GitHub  
+**Containerization & Orchestration:** Docker, Docker Compose, Kubernetes, Helm, Kompose, Kustomize, Rancher  
+**Monitoring & Logging:** Prometheus, Grafana, EFK (Elasticsearch, Fluentd, Kibana), Lens  
+
+---
+
+## Outcome  
+By leveraging modern DevOps practices, Kubernetes, and AWS cloud infrastructure, this project simulates a **real-world enterprise CI/CD pipeline**.  
+It demonstrates expertise across the full DevOps lifecycle — from **infrastructure as code** and **configuration management**, to **containerized deployments**, **Kubernetes orchestration**, and **cloud-native monitoring**.
+
+---
 
 ## 📊 Project Overview Table
 
