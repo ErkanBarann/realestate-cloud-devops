@@ -1,70 +1,71 @@
 # Module-4: Kubernetes Cluster Setup and Application Deployment on AWS
 
 ## Objective
-This task involved setting up a Kubernetes cluster on AWS using **Terraform** for infrastructure provisioning and **Ansible** for configuration. A previously Docker Compose-based multi-service application was converted into **Kubernetes manifests** using **Kompose**, customized with **Kustomize**, and deployed to the cluster using `kubectl`. The entire process was automated using **Jenkins**.
+This module involved setting up a Kubernetes cluster on AWS using **Terraform** for infrastructure provisioning and **Ansible** for configuration.  
+A previously Docker Compose–based multi-service application was converted into **Kubernetes manifests** using **Kompose**, customized with **Kustomize**, and deployed to the cluster with `kubectl`.  
+The entire process was automated end-to-end using **Jenkins pipelines**.
 
 ---
 
 ## Requirements
-- AWS account and configured AWS CLI
-- Terraform
-- Ansible
-- Docker
-- Jenkins
-- Git and GitHub access
-- AWS ECR access
-- **Kompose** tool
-- **Kustomize** tool
-- Kubernetes (e.g., lightweight K3s distribution)
+- AWS account and configured AWS CLI  
+- Terraform  
+- Ansible  
+- Docker  
+- Jenkins  
+- Git and GitHub access  
+- AWS ECR access  
+- **Kompose** tool  
+- **Kustomize** tool  
+- Kubernetes distribution (e.g., lightweight **K3s**)  
 
 ---
 
-## Completed Steps
+## Implementation Steps
 
 ### 1. Created SSH Key Pair with AWS CLI
-- A new SSH key pair was generated using AWS CLI.
-- This key pair was used for connecting to EC2 instances via SSH.
+- Generated a new SSH key pair with AWS CLI.  
+- Used the key for connecting to EC2 instances via SSH.  
 
 ### 2. Provisioned EC2 Instances with Terraform
-- At least two EC2 instances were created (one master, one node).
-- Security groups, IAM roles, and networking settings were configured accordingly.
+- Created at least two EC2 instances (one master, one worker node).  
+- Configured networking, IAM roles, and security groups.  
 
 ### 3. Configured Kubernetes Cluster with Ansible
-- Ansible playbooks were used to install Kubernetes packages.
-- The master node was initialized, and other nodes were joined to the cluster.
+- Installed Kubernetes components via Ansible playbooks.  
+- Initialized the master node and joined worker nodes into the cluster.  
 
 ### 4. Built Docker Images and Pushed to AWS ECR
-- Docker images for backend and frontend services were built.
-- Images were pushed to corresponding repositories in AWS ECR.
+- Built Docker images for backend and frontend services.  
+- Pushed the images to respective AWS ECR repositories.  
 
 ### 5. Converted Docker Compose to Kubernetes Manifests
-- The `docker-compose.yml` file was converted into Kubernetes manifests using **Kompose**.
-- The manifests were further customized using **Kustomize** (e.g., image paths, environment variables).
+- Converted `docker-compose.yml` into Kubernetes manifests with **Kompose**.  
+- Customized manifests using **Kustomize** (image paths, environment variables, configs).  
 
-### 6. Deployed Application Using kubectl
-- The application was deployed to the Kubernetes cluster using:
-  ```bash
-  kubectl apply -k .
-  ```
-- The status of pods and services was verified using `kubectl get pods` and `kubectl get svc`.
+### 6. Deployed Application with kubectl
+- Deployed manifests to the Kubernetes cluster using `kubectl apply -k .`.  
+- Verified pods and services with `kubectl get pods` and `kubectl get svc`.  
 
 ### 7. Automated Deployment with Jenkins
-- A `Jenkinsfile` was created with the following stages:
-  - Clone code from GitHub
-  - Build Docker images and push to ECR
-  - Generate and customize Kubernetes manifests (Kompose + Kustomize)
-  - Deploy to Kubernetes cluster using `kubectl`
-- The pipeline automated the full CI/CD workflow end-to-end.
+- Created a Jenkinsfile including the following stages:  
+  - Clone code from GitHub  
+  - Build Docker images and push to ECR  
+  - Generate and customize Kubernetes manifests (Kompose + Kustomize)  
+  - Deploy to Kubernetes cluster using `kubectl`  
+- Achieved a fully automated CI/CD pipeline.  
 
 ### 8. Testing and Validation
-- Verified that the application was successfully deployed on Kubernetes.
-- Frontend and backend services were tested for accessibility and functionality.
+- Verified successful deployment of the multi-service application.  
+- Frontend and backend functionality tested for accessibility and correctness.  
 
 ### 9. Documentation and Reporting
-- All scripts, configurations, and steps were documented.
-- Challenges encountered (e.g., node connectivity, permission issues) and their resolutions were recorded.
+- Documented scripts, configurations, and execution steps.  
+- Recorded challenges such as node connectivity and permissions, along with resolutions.  
 
 ---
 
 ## Outcome
-A fully operational Kubernetes environment was set up on AWS, and the multi-service application was successfully deployed. The entire setup and deployment process was automated using Jenkins, following DevOps best practices.
+A fully functional Kubernetes environment was set up on AWS.  
+The multi-service application was successfully deployed and managed on the cluster.  
+The end-to-end process — provisioning, configuration, containerization, and deployment — was automated with Jenkins, aligning with DevOps best practices.  
