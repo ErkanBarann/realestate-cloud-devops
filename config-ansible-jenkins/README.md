@@ -1,4 +1,4 @@
-# TASK-2: Configuring AWS Environments with Ansible and Jenkins
+# Module-2: Configuring AWS Environments with Ansible and Jenkins
 
 ## Objective  
 This project focused on automating the **configuration of multiple AWS environments** (such as `dev`, `test`, and `prod`) using **Ansible** and **Jenkins**.  

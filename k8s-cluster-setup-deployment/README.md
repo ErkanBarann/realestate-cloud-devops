@@ -1,4 +1,4 @@
-# TASK-4: Kubernetes Cluster Setup and Application Deployment on AWS
+# Module-4: Kubernetes Cluster Setup and Application Deployment on AWS
 
 ## Objective
 This task involved setting up a Kubernetes cluster on AWS using **Terraform** for infrastructure provisioning and **Ansible** for configuration. A previously Docker Compose-based multi-service application was converted into **Kubernetes manifests** using **Kompose**, customized with **Kustomize**, and deployed to the cluster using `kubectl`. The entire process was automated using **Jenkins**.

@@ -1,4 +1,4 @@
-# TASK-6: Kubernetes Management and Monitoring with Rancher and EFK Stack
+# Module-6: Kubernetes Management and Monitoring with Rancher and EFK Stack
 
 ## Objective
 In this task, the **same multi-service application previously deployed via Helm on AWS EKS in TASK-5** is redeployed using a **Kubernetes cluster created via Rancher UI**.  

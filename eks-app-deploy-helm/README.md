@@ -1,4 +1,4 @@
-# TASK-5: Application Deployment on AWS EKS Using Helm
+# Module-5: Application Deployment on AWS EKS Using Helm
 
 ## Objective
 In this task, the multi-service application previously deployed in **TASK-4** was redeployed using **Helm charts** on **AWS EKS (Elastic Kubernetes Service)**. The entire process was automated via **Jenkins**, where all required tools were installed, the EKS cluster was created using `eksctl`, the Helm chart was prepared, and the application was deployed. Additionally, **Nginx Ingress** was installed for external access and a **Prometheus-Grafana monitoring stack** was configured for observability.

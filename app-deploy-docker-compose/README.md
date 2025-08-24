@@ -1,4 +1,4 @@
-# TASK-3: Deploying a Multi-Service Application on AWS with Docker Compose
+# Module-3: Deploying a Multi-Service Application on AWS with Docker Compose
 
 ## Objective  
 This task focuses on deploying a multi-service web application (backend + frontend) on AWS EC2 instances using **Docker Compose**. The EC2 infrastructure was previously provisioned using **Terraform** (TASK-1) and configured with **Ansible** (TASK-2). In this task, the application is containerized, the images are pushed to **AWS ECR**, and the deployment is automated using **Jenkins**.

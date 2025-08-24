@@ -1,4 +1,4 @@
-# TASK-1: Modular Virtual Machine Provisioning on AWS using Terraform and Jenkins
+# Module-1: Modular Virtual Machine Provisioning on AWS using Terraform and Jenkins
 
 ## Objective  
 This project aimed to provision modular virtual machines (EC2 instances) on AWS using Terraform and automate the infrastructure lifecycle through Jenkins. Multiple environments such as **development**, **testing**, **staging**, and **production** were handled using Terraform workspaces.
