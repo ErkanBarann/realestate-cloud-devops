@@ -66,4 +66,17 @@ The configuration process was successfully completed in six steps:
 The configuration of the **AWS development environment** was successfully automated using **Ansible and Jenkins**.  
 The EC2 instance was dynamically discovered using AWS tags.  
 Terraform was not rerun during this module, as the infrastructure had already been created in **Module-1**.  
-The system is now ready for Docker-based development workflows and can be extended to `test` and `prod` environments in future modules.
+This setup provides the foundation for application deployment in later stages and can be extended to `test` and `prod` environments in future modules.  
+
+---
+
+## ⚠️ Production Consideration
+While this module demonstrates the configuration of EC2 instances with Ansible, production-ready environments would typically require additional configuration such as:  
+
+- **OS hardening** and regular security patching  
+- **User and SSH key management** (role-based access control)  
+- Installation of **monitoring and logging agents** (e.g., CloudWatch Agent, Fluentd)  
+- **Secrets management** for sensitive data (e.g., AWS Secrets Manager, Vault)  
+- Automated rollback strategies and **idempotent playbooks** for reliability  
+
+This ensures that Ansible automation is not only functional, but also robust, secure, and maintainable at scale in a **production environment**.

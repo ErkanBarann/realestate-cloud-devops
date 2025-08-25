@@ -51,4 +51,18 @@ Multiple environments (development, testing, staging, production) are managed us
 
 ## Result  
 The automation of multi-environment EC2 provisioning was completed successfully using **Terraform + Jenkins**.  
-The solution is **modular, scalable, and production-ready**, and can be easily extended with new infrastructure services or modules in the future.
+The solution is **modular and scalable**, and can be easily extended with additional infrastructure services or modules to achieve a production-ready architecture.  
+
+---
+
+## ⚠️ Production Consideration  
+While this project demonstrates the **core provisioning workflow** for EC2 instances, a production-ready environment would also include:  
+
+- **Database services** (e.g., Amazon RDS or Aurora) for reliable and scalable data storage  
+- Custom **VPC, subnets, and route tables**  
+- **Load balancers** and **Auto Scaling Groups**  
+- **Least privilege IAM roles and policies**  
+- Multi-AZ deployment for **high availability**  
+- Monitoring and alerting with **CloudWatch/Prometheus**  
+
+This highlights the difference between a **basic setup** and a **true production-ready architecture**.
