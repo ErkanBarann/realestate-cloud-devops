@@ -59,7 +59,7 @@ pipeline {
                 """
             echo 'Delete AWS Resources'            
                 sh """
-                cd Task-1-Solution/terraform
+                cd infra-aws-terraform-jenkins/terraform
                 terraform destroy --auto-approve
                 """
         }
