@@ -29,7 +29,7 @@ pipeline {
         stage('Create Aws Resource') {
             steps {
                 sh """
-                    cd Task-1-Solution/terraform
+                    cd infra-aws-terraform-jenkins/terraform
                     terraform workspace select ${params.ENVIRONMENT} || terraform workspace new ${params.ENVIRONMENT}
                     terraform init
                     terraform apply -var='ec2_type=${params.INSTANCE_TYPE}' \
