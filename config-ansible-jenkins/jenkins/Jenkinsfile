@@ -26,9 +26,9 @@ pipeline {
                     ls -l
                     """
                     sh 'ls -l'
-                    sh 'ansible-inventory -i ./Task-2-Solution/ansible/inventory_aws_ec2.yml --graph'
+                    sh 'ansible-inventory -i ./config-ansible-jenkins/ansible/inventory_aws_ec2.yml --graph'
                     sh """
-                    cd Task-2-Solution/ansible
+                    cd config-ansible-jenkins/ansible
                     ansible-playbook -i inventory_aws_ec2.yml --private-key=/var/lib/jenkins/workspace/${ENVIRONMENT} ${ENVIRONMENT}.yml -v
                     """
                 }
