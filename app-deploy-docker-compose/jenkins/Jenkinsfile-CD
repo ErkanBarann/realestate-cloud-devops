@@ -9,7 +9,7 @@ pipeline {
             steps {
                 echo 'env update'
                 sh """
-                cd Task-3-Solution/docker
+                cd app-deploy-docker-compose/docker
                 envsubst < docker-compose-template.yml > docker-compose.yml
                 """
             }
@@ -19,10 +19,10 @@ pipeline {
                 echo 'Deploy Application'
                 sh 'ls -l'
                 sh 'ansible --version'
-                sh 'ansible-inventory -i ./Task-3-Solution/ansible/inventory_aws_ec2.yml --graph'
+                sh 'ansible-inventory -i ./app-deploy-docker-compose/ansible/inventory_aws_ec2.yml --graph'
                 sh """
-                    cd Task-3-Solution/ansible
-                    ansible-playbook -i inventory_aws_ec2.yml --private-key=/var/lib/jenkins/workspace/dev -e "compose_dir=${WORKSPACE}/Task-3-Solution/docker" dev.yml -vv
+                    cd app-deploy-docker-compose/ansible
+                    ansible-playbook -i inventory_aws_ec2.yml --private-key=/var/lib/jenkins/workspace/dev -e "compose_dir=${WORKSPACE}/app-deploy-docker-compose/docker" dev.yml -vv
                 """
              }
         }
