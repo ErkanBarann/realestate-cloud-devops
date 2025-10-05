@@ -14,7 +14,7 @@ pipeline {
         stage('Checkout Source Code') {
             steps {
                 echo 'Checking out source code from GitHub'
-                git branch: 'main', url: "${APP_REPO_URL}", credentialsId: 'a0c8623e-b3e4-40cb-a1de-a30d6f21751a' // change
+                git branch: 'main', url: "${APP_REPO_URL}", credentialsId: '5267d26a-4799-4c25-8bd5-5fb3e62046a4' // change ( dashboard-manage Jenkins / credentials)
             }
         }
         stage('Prepare Tags for Docker Images') {
