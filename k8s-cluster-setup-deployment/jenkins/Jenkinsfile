@@ -42,9 +42,9 @@ pipeline {
         stage('Create K3S Kubernetes Cluster') {
             steps {
                 echo 'Configure AWS Instance'
-                sh 'ansible-inventory -i ./Task-4-Solution/ansible/inventory_aws_ec2.yml --graph'
+                sh 'ansible-inventory -i ./k8s-cluster-setup-deployment/ansible/inventory_aws_ec2.yml --graph'
                 sh """
-                    cd Task-4-Solution/ansible
+                    cd k8s-cluster-setup-deployment/ansible
                     ansible-playbook -i inventory_aws_ec2.yml --private-key=/var/lib/jenkins/workspace/${ENVIRONMENT}  -e "JENKINS_IP=${NODE_IP}" ${ENVIRONMENT}.yml -v
                 """
              }
@@ -54,7 +54,7 @@ pipeline {
             steps {
                 echo 'Real Estate Application Deploying'
                 sh """
-                    cd Task-4-Solution/kub_manifest
+                    cd k8s-cluster-setup-deployment/kub_manifest
                     sed -i 's/127.0.0.1/${NODE_IP}/g' /var/lib/jenkins/kubeconfig.yaml
                     export KUBECONFIG=/var/lib/jenkins/kubeconfig.yaml
                     envsubst < kustomization-template.yaml > kustomization.yml
