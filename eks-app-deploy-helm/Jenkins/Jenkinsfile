@@ -56,7 +56,7 @@ pipeline {
         stage('Wait Nginx Ingress Controller Install') {
             steps {
                 echo 'Ingress Install'
-                sh '. ./Task-5-Solution/wait.sh'
+                sh '. ./eks-app-deploy-helm/wait.sh'
 
             }
         }
@@ -64,13 +64,13 @@ pipeline {
             steps {
                 echo 'Real Estate App Deploying'
                 sh """
-                  envsubst < Task-5-Solution/realestate_chart/values-template.yaml > Task-5-Solution/realestate_chart/values.yaml
-                  sed -i s/HELM_VERSION/${BUILD_NUMBER}/ Task-5-Solution/realestate_chart/Chart.yaml
+                  envsubst < eks-app-deploy-helm/realestate_chart/values-template.yaml > eks-app-deploy-helm/realestate_chart/values.yaml
+                  sed -i s/HELM_VERSION/${BUILD_NUMBER}/ eks-app-deploy-helm/realestate_chart/Chart.yaml
                   helm plugin list | grep -q "s3" || helm plugin install https://github.com/hypnoglow/helm-s3.git
-                  aws s3 ls s3://realestate-erkan/stable/myapp/index.yaml || helm s3 init s3://realestate-erkan/stable/myapp
-                  helm repo add realestate-app-repo s3://realestate-erkan/stable/myapp/ || echo "repository name already exists"
+                  aws s3 ls s3://realestate-edizalp1/stable/myapp/index.yaml || helm s3 init s3://realestate-edizalp1/stable/myapp
+                  helm repo add realestate-app-repo s3://realestate-edizalp1/stable/myapp/ || echo "repository name already exists"
                   helm repo update
-                  helm package Task-5-Solution/realestate_chart
+                  helm package eks-app-deploy-helm/realestate_chart
                   helm s3 push --force realestate_chart-${BUILD_NUMBER}.tgz realestate-app-repo
                   helm repo update
                   helm upgrade --install \
@@ -88,7 +88,7 @@ pipeline {
                   helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
                   helm repo update
                   helm upgrade --install kubeprostack --namespace monitoring prometheus-community/kube-prometheus-stack
-                  kubectl apply -f Task-5-Solution/prometheus-grafana/ingress.yaml
+                  kubectl apply -f eks-app-deploy-helm/prometheus-grafana/ingress.yaml
                 """
              }
         }
